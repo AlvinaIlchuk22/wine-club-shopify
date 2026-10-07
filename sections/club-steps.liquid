@@ -1,0 +1,81 @@
+<section class="sec" style="background:var(--ink2)" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="reveal"><span class="eyebrow">{{ section.settings.eyebrow }}</span><h2>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em></h2></div>
+    <div class="steps">
+      {%- for block in section.blocks -%}
+        <div class="step reveal" {{ block.shopify_attributes }}><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "Simple,"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic)",
+      "default": "from the first sip"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Choose"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Pick a membership and the wines you like. Change your mind whenever you want."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Receive",
+            "text": "Four times a year a carton arrives, packed carefully with notes on what to pour and what to eat."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Enjoy",
+            "text": "Skip, pause or swap before each shipment. Visit us and your tasting is on the house."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

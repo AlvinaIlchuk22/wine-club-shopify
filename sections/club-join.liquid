@@ -1,0 +1,168 @@
+{%- assign perks = section.blocks | where: 'type', 'perk' -%}
+{%- assign options = section.blocks | where: 'type', 'tier_option' -%}
+<section class="join" id="join" {{ section.shopify_attributes }}>
+  <div class="wrap join-grid">
+    <div class="join-copy reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em></h2>
+      <p>{{ section.settings.text }}</p>
+      <ul class="perks">{%- for block in perks -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endfor -%}</ul>
+    </div>
+    <div class="join-card reveal">
+      {%- form 'customer', id: 'joinForm', class: 'jform', novalidate: 'novalidate' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="ok" id="joinOk" role="status" tabindex="-1">
+            <h3>{{ section.settings.success_title }}</h3>
+            <p>{{ section.settings.success_text }}</p>
+          </div>
+        {%- else -%}
+          <div class="err" id="joinErr" role="alert"{% unless form.errors %} hidden{% endunless %}>{% if form.errors %}{{ form.errors | default_errors }}{% endif %}</div>
+          <input type="hidden" name="contact[tags]" value="wine-club">
+          <div class="jrow">
+            <div><label for="jn">Full name</label><input id="jn" name="contact[first_name]" autocomplete="name" placeholder="Jane Citizen"></div>
+            <div><label for="je">Email</label><input id="je" name="contact[email]" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com"></div>
+          </div>
+          <fieldset class="seg">
+            <legend>Membership</legend>
+            {%- for block in options -%}
+              <label {{ block.shopify_attributes }}><input type="radio" name="tier" value="{{ block.settings.name }}"{% if block.settings.checked %} checked{% endif %}><span><b>{{ block.settings.name }}</b><small>{{ block.settings.price }}</small></span></label>
+            {%- endfor -%}
+          </fieldset>
+          <label class="chk"><input type="checkbox" id="age" name="age"> <span>I am 18 or older. (required)</span></label>
+          <label class="chk"><input type="checkbox" name="news"> <span>Send me news about new releases and events. (optional)</span></label>
+          <button class="btn solid jbtn" type="submit">{{ section.settings.button_label }}</button>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Join form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "Join today"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "Your first carton ships"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic)",
+      "default": "within a week."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Choose a membership, tell us where to send it, and Elise will pack your first release. Skip, swap or pause any time, with no fees and no phone calls."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Request my membership"
+    },
+    {
+      "type": "text",
+      "id": "success_title",
+      "label": "Thank-you title",
+      "default": "Welcome to The Cellar Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "success_text",
+      "label": "Thank-you text",
+      "default": "Thank you. We have your details and will email you within one working day to arrange your first carton."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping Australia-wide"
+        }
+      ]
+    },
+    {
+      "type": "tier_option",
+      "name": "Membership option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Reserve"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price label",
+          "default": "$189 / qtr"
+        },
+        {
+          "type": "checkbox",
+          "id": "checked",
+          "label": "Selected by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Join form",
+      "blocks": [
+        {
+          "type": "perk"
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "text": "15% off every extra order"
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "text": "Invite to the harvest lunch"
+          }
+        },
+        {
+          "type": "tier_option",
+          "settings": {
+            "name": "Discovery",
+            "price": "$89 / qtr"
+          }
+        },
+        {
+          "type": "tier_option",
+          "settings": {
+            "checked": true
+          }
+        },
+        {
+          "type": "tier_option",
+          "settings": {
+            "name": "Cellar Master",
+            "price": "$379 / qtr"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

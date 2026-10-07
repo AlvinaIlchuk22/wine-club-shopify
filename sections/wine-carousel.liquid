@@ -1,0 +1,173 @@
+{%- liquid
+  assign scene_names = 'scene-a.jpg,scene-b.jpg,scene-c.jpg' | split: ','
+  assign scene_classes = 'a,b,c' | split: ','
+  assign count = section.blocks.size
+-%}
+<section class="stage" id="stage" aria-roledescription="carousel" aria-label="{{ section.settings.label | escape }}" {{ section.shopify_attributes }}>
+  <div class="arch" aria-hidden="true"></div>
+  <div class="disc d1" aria-hidden="true"></div>
+  <div class="disc d2" aria-hidden="true"></div>
+  <div class="badge" aria-hidden="true">
+    <svg viewBox="0 0 120 120"><defs><path id="cp" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#cp" font-size="8.4" letter-spacing="3.12" fill="#e2c987">SMALL BATCH · HAND PICKED · BAROSSA · </textPath></text><g fill="none" stroke="#e2c987" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><rect x="56.6" y="36.5" width="6.8" height="5" rx="1.2" fill="#e2c987" fill-opacity=".35"/><path d="M57.2 41.5h5.6v11.5c0 3.2 7.4 5.6 7.4 14.5V80c0 1.9-1.4 3.3-3.3 3.3H53.1c-1.9 0-3.3-1.4-3.3-3.3V67.5c0-8.9 7.4-11.3 7.4-14.5z"/><rect x="52.8" y="66.5" width="14.4" height="10" rx="1" fill="#e2c987" fill-opacity=".22"/><path d="M55.5 70.2h9M55.5 73h9" stroke-width=".7" opacity=".7"/></g></svg>
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign p = block.settings.product
+      assign t = p.title | default: block.settings.title
+      assign words = t | split: ' '
+      assign last_word = words | last
+      assign first_part = t | remove_last: last_word | strip
+      assign idx = forloop.index0
+      assign mod = idx | modulo: 3
+      assign scene_class = scene_classes[mod]
+      assign bottle_n = mod | plus: 1
+      if p != blank
+        assign price_text = p.price | money_without_trailing_zeros
+      else
+        assign price_text = block.settings.price
+      endif
+    -%}
+    <div class="slide scene-{{ scene_class }}{% if forloop.first %} active{% endif %}" data-i="{{ idx }}" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+      style="--img:url('{% if block.settings.scene != blank %}{{ block.settings.scene | image_url: width: 2400 }}{% else %}{{ scene_names[mod] | asset_url }}{% endif %}')" {{ block.shopify_attributes }}>
+      <div class="scene"></div>
+      <h1 class="wname" aria-label="{{ t | escape }}"><span aria-hidden="true">{{ first_part }}</span><span aria-hidden="true">{{ last_word }}</span></h1>
+      <div class="bwrap">
+        {%- if p.featured_image -%}
+          {{ p.featured_image | image_url: width: 900 | image_tag: class: 'bt', alt: t }}
+        {%- else -%}
+          <img class="bt" src="{{ 'bottle-' | append: bottle_n | append: '.png' | asset_url }}" alt="{{ t | escape }} wine bottle" width="567" height="2000">
+        {%- endif -%}
+        <img class="plinth" src="{{ 'plinth.png' | asset_url }}" alt="" aria-hidden="true" width="900" height="356">
+      </div>
+      <div class="info"><small>{{ block.settings.region }}</small><p>{{ block.settings.note }}</p><span class="pr">{{ price_text }}</span></div>
+    </div>
+  {%- endfor -%}
+
+  <button class="arrow prev" aria-label="Previous wine"><svg viewBox="0 0 40 12"><path d="M40 6H2M8 1L2 6l6 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+  <button class="arrow next" aria-label="Next wine"><svg viewBox="0 0 40 12"><path d="M0 6h38M32 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+  <div class="stage-foot">
+    <p class="tag">{{ section.settings.tagline }}</p>
+    <div class="cta">
+      <a class="btn solid" href="{{ section.settings.cta1_url | default: '/pages/club#join' }}">{{ section.settings.cta1_label }}</a>
+      <a class="btn" href="{{ section.settings.cta2_url | default: '#visit' }}">{{ section.settings.cta2_label }}</a>
+    </div>
+    <div class="count" aria-live="polite"><b id="cur">01</b> / {% if count < 10 %}0{% endif %}{{ count }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wine carousel",
+  "tag": "section",
+  "class": "section-wine-carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Carousel label (for screen readers)",
+      "default": "Featured wines"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Grown slowly. Poured with care."
+    },
+    {
+      "type": "text",
+      "id": "cta1_label",
+      "label": "Button 1 label",
+      "default": "Join The Cellar Circle"
+    },
+    {
+      "type": "url",
+      "id": "cta1_url",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "cta2_label",
+      "label": "Button 2 label",
+      "default": "Book a tasting"
+    },
+    {
+      "type": "url",
+      "id": "cta2_url",
+      "label": "Button 2 link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "wine",
+      "name": "Wine",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product (optional: uses its name, price and image)",
+          "info": "Use a transparent PNG bottle photo as the product's first image."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name (used when no product is picked)",
+          "default": "Old Vine Shiraz"
+        },
+        {
+          "type": "text",
+          "id": "region",
+          "label": "Region and year",
+          "default": "Barossa Valley · 2021"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Tasting note",
+          "default": "Black plum, cracked pepper and cedar."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (used when no product is picked)",
+          "default": "$68"
+        },
+        {
+          "type": "image_picker",
+          "id": "scene",
+          "label": "Background scene (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Wine carousel",
+      "blocks": [
+        {
+          "type": "wine"
+        },
+        {
+          "type": "wine",
+          "settings": {
+            "title": "Eden Riesling",
+            "region": "Eden Valley · 2023",
+            "note": "Lime blossom, wet slate, a bright finish.",
+            "price": "$34"
+          }
+        },
+        {
+          "type": "wine",
+          "settings": {
+            "title": "Ridge Grenache",
+            "region": "Barossa Ranges · 2022",
+            "note": "Wild strawberry, dried orange, warm spice.",
+            "price": "$52"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+<header class="hdr" id="hdr">
+  <a class="logo" href="{{ routes.root_url }}">{{ settings.logo_text }}<small>{{ settings.logo_tag }}</small></a>
+  <nav class="nav" aria-label="Main">
+    {%- if section.settings.menu != blank -%}
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.root_url }}#wines">The wines</a>
+      <a href="{{ routes.root_url }}#story">Our story</a>
+      <a href="{{ routes.root_url }}#visit">Visit</a>
+      <a href="/pages/club"{% if page.handle == 'club' %} aria-current="page"{% endif %}>The Cellar Circle</a>
+    {%- endif -%}
+  </nav>
+  <div class="hdr-right">
+    <a class="cart-link" href="{{ routes.cart_url }}">{{ 'general.cart' | t }} <span class="cnt" data-cart-count>{{ cart.item_count }}</span></a>
+    <a class="btn btn-sm" href="/pages/club#join">{{ 'general.join' | t }}</a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu (leave empty for the default links)" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Marlow Vale",
+    "theme_version": "1.0.0",
+    "theme_author": "Alvina Ilchuk",
+    "theme_documentation_url": "https://github.com/AlvinaIlchuk22/wine-club-shopify",
+    "theme_support_url": "https://github.com/AlvinaIlchuk22/wine-club-shopify/issues"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Brand name",
+        "default": "Marlow Vale"
+      },
+      {
+        "type": "text",
+        "id": "logo_tag",
+        "label": "Brand tagline",
+        "default": "Estate \u00b7 Est. 1987"
+      },
+      {
+        "type": "text",
+        "id": "address",
+        "label": "Address",
+        "default": "1240 Ridge Road, Barossa Valley SA 5352"
+      },
+      {
+        "type": "text",
+        "id": "hours",
+        "label": "Opening hours",
+        "default": "Cellar door open daily 10am to 5pm"
+      },
+      {
+        "type": "text",
+        "id": "email",
+        "label": "Email",
+        "default": "hello@marlowvale.example"
+      },
+      {
+        "type": "text",
+        "id": "phone",
+        "label": "Phone",
+        "default": "(08) 5555 0142"
+      },
+      {
+        "type": "text",
+        "id": "responsible",
+        "label": "Responsible drinking line",
+        "default": "Please drink responsibly."
+      }
+    ]
+  }
+]

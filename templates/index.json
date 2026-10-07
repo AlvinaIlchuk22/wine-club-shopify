@@ -1,0 +1,154 @@
+{
+  "sections": {
+    "hero": {
+      "type": "wine-carousel",
+      "blocks": {
+        "b1": {
+          "type": "wine"
+        },
+        "b2": {
+          "type": "wine",
+          "settings": {
+            "title": "Eden Riesling",
+            "region": "Eden Valley · 2023",
+            "note": "Lime blossom, wet slate, a bright finish.",
+            "price": "$34"
+          }
+        },
+        "b3": {
+          "type": "wine",
+          "settings": {
+            "title": "Ridge Grenache",
+            "region": "Barossa Ranges · 2022",
+            "note": "Wild strawberry, dried orange, warm spice.",
+            "price": "$52"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "stats": {
+      "type": "stats",
+      "blocks": {
+        "b1": {
+          "type": "stat",
+          "settings": {
+            "value": "1962",
+            "from": "1900",
+            "label": "Vines planted"
+          }
+        },
+        "b2": {
+          "type": "stat"
+        },
+        "b3": {
+          "type": "stat",
+          "settings": {
+            "value": "12",
+            "label": "Small-batch releases"
+          }
+        },
+        "b4": {
+          "type": "stat",
+          "settings": {
+            "value": "4.9",
+            "decimals": 1,
+            "label": "Cellar door rating"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "wines": {
+      "type": "featured-wines",
+      "blocks": {
+        "b1": {
+          "type": "wine"
+        },
+        "b2": {
+          "type": "wine",
+          "settings": {
+            "title": "Eden Riesling",
+            "region": "Eden Valley · 2023",
+            "rating": "4.7",
+            "reviews": "164",
+            "temp": "8 to 10°C",
+            "pairing": "Oysters, grilled prawns, Thai salads",
+            "grapes": "100% Riesling, hand picked",
+            "price": "$34.00",
+            "blob": "#7f9a4a"
+          }
+        },
+        "b3": {
+          "type": "wine",
+          "settings": {
+            "title": "Ridge Grenache",
+            "region": "Barossa Ranges · 2022",
+            "rating": "4.9",
+            "reviews": "98",
+            "temp": "14 to 16°C",
+            "pairing": "Roast duck, charcuterie, wood-fired pizza",
+            "grapes": "85% Grenache, 15% Mataro",
+            "price": "$52.00",
+            "blob": "#b8683a"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "story": {
+      "type": "story"
+    },
+    "visit": {
+      "type": "cellar-door",
+      "blocks": {
+        "b1": {
+          "type": "hour"
+        },
+        "b2": {
+          "type": "hour",
+          "settings": {
+            "label": "Tasting",
+            "value": "$15, refunded on 2+ bottles"
+          }
+        },
+        "b3": {
+          "type": "hour",
+          "settings": {
+            "label": "Share platters",
+            "value": "Local cheese and cured meats"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "quote": {
+      "type": "quote"
+    }
+  },
+  "order": [
+    "hero",
+    "stats",
+    "wines",
+    "story",
+    "visit",
+    "quote"
+  ]
+}

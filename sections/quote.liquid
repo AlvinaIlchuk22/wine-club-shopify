@@ -1,0 +1,31 @@
+<section class="sec" {{ section.shopify_attributes }}>
+  <div class="wrap quote reveal">
+    <p>&ldquo;{{ section.settings.quote }}&rdquo;</p>
+    <cite>{{ section.settings.cite }}</cite>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "The kind of place you go for one tasting and leave as a member. The Shiraz is unreal."
+    },
+    {
+      "type": "text",
+      "id": "cite",
+      "label": "Attribution",
+      "default": "Sample review · Cellar Circle member"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote"
+    }
+  ]
+}
+{% endschema %}

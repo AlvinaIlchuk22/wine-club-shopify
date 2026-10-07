@@ -1,0 +1,85 @@
+<div class="stats" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    {%- for block in section.blocks -%}
+      <div class="stat" {{ block.shopify_attributes }}>
+        <b data-count="{{ block.settings.value }}"{% if block.settings.from != blank %} data-from="{{ block.settings.from }}"{% endif %}{% if block.settings.decimals > 0 %} data-dec="{{ block.settings.decimals }}"{% endif %}>{{ block.settings.value }}</b>
+        <span>{{ block.settings.label }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Counters",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Counter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Final number",
+          "default": "38"
+        },
+        {
+          "type": "text",
+          "id": "from",
+          "label": "Start counting from (optional)"
+        },
+        {
+          "type": "range",
+          "id": "decimals",
+          "min": 0,
+          "max": 2,
+          "step": 1,
+          "label": "Decimal places",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Hectares, all hand-picked"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Counters",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "1962",
+            "from": "1900",
+            "label": "Vines planted"
+          }
+        },
+        {
+          "type": "stat"
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "12",
+            "label": "Small-batch releases"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "4.9",
+            "decimals": 1,
+            "label": "Cellar door rating"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

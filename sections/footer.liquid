@@ -1,0 +1,28 @@
+<footer class="ftr">
+  <div class="wrap">
+    <div>
+      <span class="logo">{{ settings.logo_text }}</span>
+      <p>{{ settings.address }}<br>{{ settings.hours }}</p>
+    </div>
+    <div>
+      <p>{{ settings.email }}<br>{{ settings.phone }}</p>
+    </div>
+    <div>
+      <p>
+        <a href="{{ routes.root_url }}">Home</a> &middot;
+        <a href="/pages/club">The Cellar Circle</a>
+        {%- for link in section.settings.menu.links %} &middot; <a href="{{ link.url }}">{{ link.title }}</a>{% endfor -%}
+      </p>
+    </div>
+    <p class="note">{{ settings.responsible }}</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Extra footer links", "default": "footer" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+<section class="wrap coll-head" {{ section.shopify_attributes }}>
+  <span class="eyebrow">Collection</span>
+  <h1>{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+</section>
+<div class="wrap">
+  {%- paginate collection.products by 12 -%}
+    <div class="coll-grid pcards">
+      {%- for product in collection.products -%}
+        {%- render 'wine-card', product: product, region: product.type, idx: forloop.index0 -%}
+      {%- else -%}
+        <p class="cart-empty">No products in this collection yet.</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<div style="text-align:center;padding-bottom:70px">{{ paginate | default_pagination }}</div>{%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

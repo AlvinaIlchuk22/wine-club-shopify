@@ -1,0 +1,129 @@
+<section class="band" id="visit" {{ section.shopify_attributes }}>
+  <div class="band-bg" aria-hidden="true" style="--bg-img:url('{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 2400 }}{% else %}{{ 'scene-c.jpg' | asset_url }}{% endif %}')"></div>
+  <div class="wrap reveal">
+    <span class="eyebrow" style="color:var(--gold2)">{{ section.settings.eyebrow }}</span>
+    <h2>{{ section.settings.heading_line1 }}<br>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em></h2>
+    <p>{{ section.settings.text }}</p>
+    <ul class="hours">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}><b>{{ block.settings.label }}</b><span>{{ block.settings.value }}</span></li>
+      {%- endfor -%}
+    </ul>
+    <div class="band-cta">
+      <a class="btn solid" href="{% if section.settings.button1_url != blank %}{{ section.settings.button1_url }}{% else %}mailto:{{ settings.email }}?subject=Tasting%20booking{% endif %}">{{ section.settings.button1_label }}</a>
+      {%- if section.settings.button2_label != blank -%}
+        <a class="btn" href="{% if section.settings.button2_url != blank %}{{ section.settings.button2_url }}{% else %}https://www.google.com/maps/search/?api=1&query={{ settings.address | url_encode }}{% endif %}" target="_blank" rel="noopener">{{ section.settings.button2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cellar door band",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background photo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "The cellar door"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading line 1",
+      "default": "Stay a while."
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading line 2 (start)",
+      "default": "We will"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading line 2 (italic)",
+      "default": "pour."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Tastings are relaxed, seated and never rushed. Add a share platter of local cheese and cured meats, and watch the afternoon light cross the vines."
+    },
+    {
+      "type": "text",
+      "id": "button1_label",
+      "label": "Button 1 label",
+      "default": "Book a tasting"
+    },
+    {
+      "type": "url",
+      "id": "button1_url",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button2_label",
+      "label": "Button 2 label",
+      "default": "Get directions"
+    },
+    {
+      "type": "url",
+      "id": "button2_url",
+      "label": "Button 2 link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hour",
+      "name": "Info card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Open daily"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "10am to 5pm"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Cellar door band",
+      "blocks": [
+        {
+          "type": "hour"
+        },
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Tasting",
+            "value": "$15, refunded on 2+ bottles"
+          }
+        },
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Share platters",
+            "value": "Local cheese and cured meats"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

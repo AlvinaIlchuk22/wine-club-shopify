@@ -1,0 +1,16 @@
+{
+  "name": "wine-club-shopify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@shopify/cli": "^4.8.5",
+    "liquidjs": "^10.30.0"
+  }
+}

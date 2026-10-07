@@ -1,0 +1,68 @@
+{%- comment -%}
+  Product card. Works with a real product (live price, image, cart form) or with
+  sample text/images before products exist.
+  Params: product, title, region, rating, reviews, temp, pairing, grapes, price_text, blob, idx
+{%- endcomment -%}
+{%- liquid
+  assign t = product.title | default: title
+  assign words = t | split: ' '
+  assign last_word = words | last
+  assign first_part = t | remove_last: last_word | strip
+  assign n = idx | default: 0 | modulo: 3 | plus: 1
+  assign accent = blob | default: '#7b1830'
+  assign key = product.handle | default: t | handleize
+  assign variant = product.selected_or_first_available_variant
+  if product != blank
+    assign price_full = product.price | money
+  else
+    assign price_full = price_text
+  endif
+-%}
+{%- capture buy_row -%}
+  <div class="pc-buy">
+    <div class="qty">
+      <button type="button" class="q-minus" aria-label="Fewer bottles">&minus;</button>
+      <output aria-live="polite">01</output>
+      <button type="button" class="q-plus" aria-label="More bottles">+</button>
+    </div>
+    <button type="button" class="heart" aria-pressed="false" data-key="{{ key }}" aria-label="Save {{ t | escape }} to favourites">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6l-1.2-1.1C6 15.2 3 12.5 3 9.2 3 6.6 5 4.6 7.5 4.6c1.5 0 3 .7 4.5 2.3 1.5-1.6 3-2.3 4.5-2.3C19 4.6 21 6.6 21 9.2c0 3.3-3 6-7.8 10.3L12 20.6z" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+{%- endcapture -%}
+<article class="pcard reveal" style="--blob:{{ accent }}">
+  <div class="pc-info">
+    {%- if region != blank -%}<small>{{ region }}</small>{%- endif -%}
+    <h3>{% if first_part != blank %}{{ first_part }}<br>{% endif %}{{ last_word }}</h3>
+    {%- if rating != blank -%}
+      <div class="stars" role="img" aria-label="Rated {{ rating }} out of 5"><span aria-hidden="true">★★★★★</span> <em>{{ rating }}</em>{% if reviews != blank %} <span class="rv">{{ reviews }} reviews</span>{% endif %}</div>
+    {%- endif -%}
+    {%- if temp != blank or pairing != blank or grapes != blank -%}
+      <dl>
+        {%- if temp != blank -%}<dt>Service temperature</dt><dd>{{ temp }}</dd>{%- endif -%}
+        {%- if pairing != blank -%}<dt>Food pairings</dt><dd>{{ pairing }}</dd>{%- endif -%}
+        {%- if grapes != blank -%}<dt>Grapes</dt><dd>{{ grapes }}</dd>{%- endif -%}
+      </dl>
+    {%- endif -%}
+    <div class="pc-price">{{ price_full }}</div>
+    {%- if product != blank -%}
+      {%- form 'product', product, data-ajax-cart: 'true' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        {{ buy_row }}
+        <button type="submit" class="add" data-label="Add to cart"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to cart{% else %}Sold out{% endif %}</button>
+      {%- endform -%}
+    {%- else -%}
+      {{ buy_row }}
+      <button type="button" class="add" data-label="Add to cart">Add to cart</button>
+    {%- endif -%}
+  </div>
+  <div class="pc-pic">
+    <span class="blob" aria-hidden="true"></span>
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 700 | image_tag: alt: t, loading: 'lazy' }}
+    {%- else -%}
+      <img src="{{ 'bottle-' | append: n | append: '.png' | asset_url }}" alt="{{ t | escape }} wine bottle" width="567" height="2000" loading="lazy">
+    {%- endif -%}
+  </div>
+</article>

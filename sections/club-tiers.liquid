@@ -1,0 +1,159 @@
+<section class="sec" id="tiers" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;margin-bottom:64px">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em></h2>
+      <p class="lede" style="margin:18px auto 0">{{ section.settings.lede }}</p>
+    </div>
+    <div class="tiers">
+      {%- for block in section.blocks -%}
+        {%- assign items = block.settings.items | newline_to_br | split: '<br />' -%}
+        <article class="tier reveal{% if block.settings.featured %} feat{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.featured -%}<span class="tag">{{ block.settings.tag }}</span>{%- endif -%}
+          <div class="tier-art" aria-hidden="true">
+            <img src="{{ 'bottle-1.png' | asset_url }}" alt="" class="s" width="506" height="2000">
+            <img src="{{ 'bottle-2.png' | asset_url }}" alt="" class="m" width="457" height="2000">
+            {%- if block.settings.bottle_art == '3' -%}<img src="{{ 'bottle-3.png' | asset_url }}" alt="" class="s" width="567" height="2000">{%- endif -%}
+            <span class="more">{{ block.settings.bottles }}</span>
+          </div>
+          <h3>{{ block.settings.name }}</h3>
+          <div class="amt">{{ block.settings.price }} <small>{{ block.settings.per }}</small></div>
+          <ul>
+            {%- for item in items -%}{%- assign line = item | strip -%}{%- if line != blank -%}<li>{{ line }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+          <a class="btn{% if block.settings.featured %} solid{% endif %}" href="#join" data-tier="{{ block.settings.name }}">Choose {{ block.settings.name }}</a>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Membership tiers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "Memberships"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "Choose your"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic word)",
+      "default": "pour"
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro text",
+      "default": "Every membership includes free shipping, 15% off all extra orders and an invite to the member-only harvest lunch."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Discovery"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$89"
+        },
+        {
+          "type": "text",
+          "id": "per",
+          "label": "Per",
+          "default": "/ quarter"
+        },
+        {
+          "type": "text",
+          "id": "bottles",
+          "label": "Bottle count label",
+          "default": "2 bottles"
+        },
+        {
+          "type": "select",
+          "id": "bottle_art",
+          "label": "Bottles in the picture",
+          "options": [
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            }
+          ],
+          "default": "2"
+        },
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "What is included (one per line)",
+          "default": "2 bottles each quarter\nA mix of whites and reds\nTasting notes from Elise"
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Highlight as most popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Highlight label",
+          "default": "Most loved"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Membership tiers",
+      "blocks": [
+        {
+          "type": "tier"
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "name": "Reserve",
+            "price": "$189",
+            "bottles": "4 bottles",
+            "bottle_art": "3",
+            "items": "4 bottles each quarter\nLimited releases before public sale\nComplimentary tasting for two\nChoose your own varieties",
+            "featured": true
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "name": "Cellar Master",
+            "price": "$379",
+            "bottles": "8 bottles",
+            "bottle_art": "3",
+            "items": "8 bottles each quarter\nLibrary vintages and barrel samples\nPrivate cellar dinner each year\nDedicated winemaker contact"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

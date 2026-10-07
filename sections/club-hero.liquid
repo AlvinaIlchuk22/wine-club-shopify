@@ -1,0 +1,162 @@
+{%- assign bottles = section.blocks | where: 'type', 'bottle' -%}
+{%- assign perks = section.blocks | where: 'type', 'perk' -%}
+<section class="chero" id="top" {{ section.shopify_attributes }}>
+  <div class="chero-bg" aria-hidden="true" style="--bg-img:url('{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 2400 }}{% else %}{{ 'scene-a.jpg' | asset_url }}{% endif %}')"></div>
+  <div class="wrap chero-grid">
+    <div class="chero-copy">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h1>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em> {{ section.settings.heading_end }}</h1>
+      <p class="lede">{{ section.settings.lede }}</p>
+      <div class="cta">
+        <a class="btn solid" href="#join">{{ section.settings.cta1_label }}</a>
+        <a class="btn" href="#tiers">{{ section.settings.cta2_label }}</a>
+      </div>
+      <ul class="perks">
+        {%- for block in perks -%}<li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>{%- endfor -%}
+      </ul>
+    </div>
+    <div class="trio" aria-label="Featured wines">
+      <div class="trio-arch" aria-hidden="true"></div>
+      <div class="badge trio-badge" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="cp2" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#cp2" font-size="8.4" letter-spacing="3.55" fill="#e2c987">4 SHIPMENTS A YEAR · SKIP ANY TIME · </textPath></text><g fill="none" stroke="#e2c987" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"><rect x="56.6" y="36.5" width="6.8" height="5" rx="1.2" fill="#e2c987" fill-opacity=".35"/><path d="M57.2 41.5h5.6v11.5c0 3.2 7.4 5.6 7.4 14.5V80c0 1.9-1.4 3.3-3.3 3.3H53.1c-1.9 0-3.3-1.4-3.3-3.3V67.5c0-8.9 7.4-11.3 7.4-14.5z"/><rect x="52.8" y="66.5" width="14.4" height="10" rx="1" fill="#e2c987" fill-opacity=".22"/><path d="M55.5 70.2h9M55.5 73h9" stroke-width=".7" opacity=".7"/></g></svg></div>
+      {%- for block in bottles limit: 3 -%}<img class="tp tp{{ forloop.index }}" src="{{ 'plinth.png' | asset_url }}" alt="" aria-hidden="true" width="900" height="356">{%- endfor -%}
+      {%- for block in bottles limit: 3 -%}
+        {%- liquid
+          assign p = block.settings.product
+          assign t = p.title | default: block.settings.title
+          assign cls = 'tb tb1,tb tb2,tb tb3' | split: ','
+          assign bw = '506,457,567' | split: ','
+        -%}
+        {%- if p.featured_image -%}
+          {{ p.featured_image | image_url: width: 700 | image_tag: class: cls[forloop.index0], alt: t }}
+        {%- else -%}
+          <img class="{{ cls[forloop.index0] }}" src="{{ 'bottle-' | append: forloop.index | append: '.png' | asset_url }}" alt="{{ t | escape }} bottle" width="{{ bw[forloop.index0] }}" height="2000" {{ block.shopify_attributes }}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Club hero with bottles",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background photo (optional)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "The Cellar Circle · wine club"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "First pour of"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic word)",
+      "default": "every"
+    },
+    {
+      "type": "text",
+      "id": "heading_end",
+      "label": "Heading (end)",
+      "default": "release."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro text",
+      "default": "Four times a year, Elise picks the wines she is proudest of and we send them to your door. Member pricing, free shipping and a seat at the cellar door table, with nothing to lock you in."
+    },
+    {
+      "type": "text",
+      "id": "cta1_label",
+      "label": "Button 1 label",
+      "default": "Join from $89 a quarter"
+    },
+    {
+      "type": "text",
+      "id": "cta2_label",
+      "label": "Button 2 label",
+      "default": "Compare memberships"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping"
+        }
+      ]
+    },
+    {
+      "type": "bottle",
+      "name": "Bottle (left, centre, right)",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product (optional)",
+          "info": "Uses the product's first image. Use a transparent PNG."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name (used when no product is picked)",
+          "default": "Old Vine Shiraz"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Club hero with bottles",
+      "blocks": [
+        {
+          "type": "perk"
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "text": "Skip or pause any time"
+          }
+        },
+        {
+          "type": "perk",
+          "settings": {
+            "text": "15% off every order"
+          }
+        },
+        {
+          "type": "bottle"
+        },
+        {
+          "type": "bottle",
+          "settings": {
+            "title": "Eden Riesling"
+          }
+        },
+        {
+          "type": "bottle",
+          "settings": {
+            "title": "Ridge Grenache"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

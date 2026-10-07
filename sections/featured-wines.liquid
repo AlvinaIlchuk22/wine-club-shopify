@@ -1,0 +1,178 @@
+<section class="sec" id="wines" {{ section.shopify_attributes }}>
+  <div class="wrap">
+    <div class="wines-head reveal">
+      <div>
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em> {{ section.settings.heading_end }}</h2>
+      </div>
+      <a class="btn" href="{{ section.settings.button_url | default: '/pages/club' }}">{{ section.settings.button_label }}</a>
+    </div>
+    <div class="wines pcards">
+      {%- for block in section.blocks -%}
+        <div style="display:contents" {{ block.shopify_attributes }}>
+          {%- render 'wine-card',
+            product: block.settings.product,
+            title: block.settings.title,
+            region: block.settings.region,
+            rating: block.settings.rating,
+            reviews: block.settings.reviews,
+            temp: block.settings.temp,
+            pairing: block.settings.pairing,
+            grapes: block.settings.grapes,
+            price_text: block.settings.price,
+            blob: block.settings.blob,
+            idx: forloop.index0 -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wine cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "This season"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "The"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic word)",
+      "default": "current"
+    },
+    {
+      "type": "text",
+      "id": "heading_end",
+      "label": "Heading (end)",
+      "default": "releases"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Taste them first, join the club"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "wine",
+      "name": "Wine card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product (optional: uses its name, price, image and cart)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name (used when no product is picked)",
+          "default": "Old Vine Shiraz"
+        },
+        {
+          "type": "text",
+          "id": "region",
+          "label": "Region and year",
+          "default": "Barossa Valley · 2021"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating (out of 5)",
+          "default": "4.8"
+        },
+        {
+          "type": "text",
+          "id": "reviews",
+          "label": "Number of reviews",
+          "default": "212"
+        },
+        {
+          "type": "text",
+          "id": "temp",
+          "label": "Service temperature",
+          "default": "16 to 18°C"
+        },
+        {
+          "type": "text",
+          "id": "pairing",
+          "label": "Food pairings",
+          "default": "Slow-roast lamb, aged cheddar, mushrooms"
+        },
+        {
+          "type": "text",
+          "id": "grapes",
+          "label": "Grapes",
+          "default": "100% Shiraz, vines planted 1962"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (used when no product is picked)",
+          "default": "$68.00"
+        },
+        {
+          "type": "color",
+          "id": "blob",
+          "label": "Glow colour behind the bottle",
+          "default": "#7b1830"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Wine cards",
+      "blocks": [
+        {
+          "type": "wine"
+        },
+        {
+          "type": "wine",
+          "settings": {
+            "title": "Eden Riesling",
+            "region": "Eden Valley · 2023",
+            "rating": "4.7",
+            "reviews": "164",
+            "temp": "8 to 10°C",
+            "pairing": "Oysters, grilled prawns, Thai salads",
+            "grapes": "100% Riesling, hand picked",
+            "price": "$34.00",
+            "blob": "#7f9a4a"
+          }
+        },
+        {
+          "type": "wine",
+          "settings": {
+            "title": "Ridge Grenache",
+            "region": "Barossa Ranges · 2022",
+            "rating": "4.9",
+            "reviews": "98",
+            "temp": "14 to 16°C",
+            "pairing": "Roast duck, charcuterie, wood-fired pizza",
+            "grapes": "85% Grenache, 15% Mataro",
+            "price": "$52.00",
+            "blob": "#b8683a"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

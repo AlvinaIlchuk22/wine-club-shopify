@@ -1,0 +1,32 @@
+{%- assign variant = product.selected_or_first_available_variant -%}
+<section class="wrap pdp" {{ section.shopify_attributes }}>
+  <div class="pdp-pic">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 900 | image_tag: alt: product.title }}
+    {%- endif -%}
+  </div>
+  <div class="pdp-info">
+    {%- if product.type != blank -%}<span class="eyebrow">{{ product.type }}</span>{%- endif -%}
+    <h1>{{ product.title }}</h1>
+    <div class="price">{{ variant.price | money }}</div>
+    <div class="desc">{{ product.description }}</div>
+    {%- form 'product', product, class: 'pdp-form' -%}
+      {%- if product.has_only_default_variant -%}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+      {%- else -%}
+        <select name="id" aria-label="Option">
+          {%- for v in product.variants -%}<option value="{{ v.id }}"{% if v == variant %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title }} · {{ v.price | money }}</option>{%- endfor -%}
+        </select>
+      {%- endif -%}
+      <input type="number" name="quantity" value="1" min="1" max="12" aria-label="Quantity">
+      <button class="btn solid" type="submit"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to cart{% else %}Sold out{% endif %}</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": []
+}
+{% endschema %}

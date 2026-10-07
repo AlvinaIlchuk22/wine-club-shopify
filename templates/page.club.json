@@ -1,0 +1,198 @@
+{
+  "sections": {
+    "club_hero": {
+      "type": "club-hero",
+      "blocks": {
+        "b1": {
+          "type": "perk"
+        },
+        "b2": {
+          "type": "perk",
+          "settings": {
+            "text": "Skip or pause any time"
+          }
+        },
+        "b3": {
+          "type": "perk",
+          "settings": {
+            "text": "15% off every order"
+          }
+        },
+        "b4": {
+          "type": "bottle"
+        },
+        "b5": {
+          "type": "bottle",
+          "settings": {
+            "title": "Eden Riesling"
+          }
+        },
+        "b6": {
+          "type": "bottle",
+          "settings": {
+            "title": "Ridge Grenache"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ]
+    },
+    "tiers": {
+      "type": "club-tiers",
+      "blocks": {
+        "b1": {
+          "type": "tier"
+        },
+        "b2": {
+          "type": "tier",
+          "settings": {
+            "name": "Reserve",
+            "price": "$189",
+            "bottles": "4 bottles",
+            "bottle_art": "3",
+            "items": "4 bottles each quarter\nLimited releases before public sale\nComplimentary tasting for two\nChoose your own varieties",
+            "featured": true
+          }
+        },
+        "b3": {
+          "type": "tier",
+          "settings": {
+            "name": "Cellar Master",
+            "price": "$379",
+            "bottles": "8 bottles",
+            "bottle_art": "3",
+            "items": "8 bottles each quarter\nLibrary vintages and barrel samples\nPrivate cellar dinner each year\nDedicated winemaker contact"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "steps": {
+      "type": "club-steps",
+      "blocks": {
+        "b1": {
+          "type": "step"
+        },
+        "b2": {
+          "type": "step",
+          "settings": {
+            "title": "Receive",
+            "text": "Four times a year a carton arrives, packed carefully with notes on what to pour and what to eat."
+          }
+        },
+        "b3": {
+          "type": "step",
+          "settings": {
+            "title": "Enjoy",
+            "text": "Skip, pause or swap before each shipment. Visit us and your tasting is on the house."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "b1": {
+          "type": "question"
+        },
+        "b2": {
+          "type": "question",
+          "settings": {
+            "question": "How much is shipping?",
+            "answer": "Free on every Cellar Circle shipment Australia-wide. Standard shipping applies to extra orders."
+          }
+        },
+        "b3": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to be home to receive wine?",
+            "answer": "An adult must sign. Choose a work address, a neighbour or hold at the cellar door."
+          }
+        },
+        "b4": {
+          "type": "question",
+          "settings": {
+            "question": "What if I do not like a wine?",
+            "answer": "Tell us within 30 days and we will replace it or credit your account."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "join": {
+      "type": "club-join",
+      "blocks": {
+        "b1": {
+          "type": "perk"
+        },
+        "b2": {
+          "type": "perk",
+          "settings": {
+            "text": "15% off every extra order"
+          }
+        },
+        "b3": {
+          "type": "perk",
+          "settings": {
+            "text": "Invite to the harvest lunch"
+          }
+        },
+        "b4": {
+          "type": "tier_option",
+          "settings": {
+            "name": "Discovery",
+            "price": "$89 / qtr"
+          }
+        },
+        "b5": {
+          "type": "tier_option",
+          "settings": {
+            "checked": true
+          }
+        },
+        "b6": {
+          "type": "tier_option",
+          "settings": {
+            "name": "Cellar Master",
+            "price": "$379 / qtr"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ]
+    }
+  },
+  "order": [
+    "club_hero",
+    "tiers",
+    "steps",
+    "faq",
+    "join"
+  ]
+}

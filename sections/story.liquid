@@ -1,0 +1,104 @@
+<section class="sec" id="story" style="background:var(--ink2)" {{ section.shopify_attributes }}>
+  <div class="wrap split">
+    <div class="collage reveal">
+      <figure class="c-main">
+        {%- if section.settings.image_main != blank -%}
+          {{ section.settings.image_main | image_url: width: 1400 | image_tag: alt: section.settings.image_main.alt, loading: 'lazy' }}
+        {%- else -%}
+          <img src="{{ 'story-main.jpg' | asset_url }}" alt="Winemaker standing between rows of old vines at golden hour" width="1400" height="1738" loading="lazy">
+        {%- endif -%}
+      </figure>
+      <figure class="c-detail">
+        {%- if section.settings.image_detail != blank -%}
+          {{ section.settings.image_detail | image_url: width: 800 | image_tag: alt: section.settings.image_detail.alt, loading: 'lazy' }}
+        {%- else -%}
+          <img src="{{ 'story-detail.jpg' | asset_url }}" alt="Weathered hands holding a cluster of freshly picked dark grapes" width="800" height="800" loading="lazy">
+        {%- endif -%}
+      </figure>
+      <span class="c-year" aria-hidden="true">{{ section.settings.year }}</span>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2>{{ section.settings.heading_start }} <em>{{ section.settings.heading_em }}</em> {{ section.settings.heading_end }}</h2>
+      <p>{{ section.settings.text }}</p>
+      <p class="sign">{{ section.settings.signature }}</p>
+      <a class="btn" href="{{ section.settings.button_url | default: '#visit' }}">{{ section.settings.button_label }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story with photos",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_main",
+      "label": "Large photo (portrait, 4:5)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_detail",
+      "label": "Small round photo (square)"
+    },
+    {
+      "type": "text",
+      "id": "year",
+      "label": "Vertical label",
+      "default": "Est. 1987"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "Our story"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (start)",
+      "default": "Old vines,"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading (italic word)",
+      "default": "unhurried"
+    },
+    {
+      "type": "text",
+      "id": "heading_end",
+      "label": "Heading (end)",
+      "default": "hands"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "When Ruth and Tom Marlow bought a tired hillside in 1987, the oldest vines were already twenty-five years old. They kept them. Today their daughter Elise makes the wine the same way: low yields, wild ferments, no shortcuts."
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature",
+      "default": "Elise Marlow, winemaker"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Come and see the vines"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story with photos"
+    }
+  ]
+}
+{% endschema %}
